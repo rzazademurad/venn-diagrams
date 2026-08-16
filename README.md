@@ -8,6 +8,14 @@
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20deps-react%20%2B%20react--dom%20only-brightgreen.svg)
 ![Tests](https://img.shields.io/badge/parity%20tests-213%20passing-brightgreen.svg)
 
+### ▶️ [**Try it live — rzazademurad.github.io/venn-diagrams**](https://rzazademurad.github.io/venn-diagrams/)
+
+No install, runs entirely in your browser. Type a formula like
+[`A & B & C & D & F & G & H`](https://rzazademurad.github.io/venn-diagrams/#s=A%20%26%20B%20%26%20C%20%26%20D%20%26%20F%20%26%20G%20%26%20H)
+and hit **Construct**.
+
+---
+
 Type a logical formula. Get its truth table and its Venn diagram — for **any**
 number of sets, drawn in the browser.
 
@@ -16,10 +24,11 @@ A & B | C -> !D          →   16-row truth table + 4-set diagram
 A & B & C & D & F & G & H →  128 rows, every region drawn and fillable
 ```
 
-Everything is first-party code: the formula is lexed, parsed and evaluated by a
-hand-written compiler front end, and the diagram is constructed and rasterized
-from scratch. No server, no geometry library. Runtime dependencies are
-**react + react-dom, nothing else**.
+The entire pipeline is implemented from first principles: a purpose-built
+compiler front end lexes, parses and evaluates the formula, and the diagram
+geometry is constructed and rasterized without any external geometry or
+diagramming library. The application is fully client-side, with
+**react and react-dom as its only runtime dependencies**.
 
 ![The app: an 8-set diagram in Sets view beside its 128-row truth table](UI.png)
 

@@ -11,7 +11,7 @@ Classical circles cannot construct Venn diagrams for $N \ge 4$ sets because
 $N$ circles produce at most $N^2 - N + 2$ regions (14 regions for 4 circles,
 failing the required $2^4 = 16$). This project implements John Venn's
 inductive serpentine construction to generate and fill all $2^N$ regions for
-arbitrary $N$ — see [Why circles are not enough](#why-circles-are-not-enough).
+arbitrary $N$ — see [Geometry engines](#geometry-engines).
 
 **Live demo:** https://rzazademurad.github.io/venn-diagrams/
 
@@ -48,24 +48,23 @@ Note that `+` and `<=>` bind below the conditional, so `A + B => C` parses as
 `A + (B => C)`. This matches the reference implementation, which the test
 suite checks against.
 
-## Why circles are not enough
+## Geometry engines
 
-A Venn diagram on N sets must show all 2^N intersection regions. Two circles
-intersect in at most two points, which limits N circles to N² − N + 2
-regions; at N = 4 that gives 14 < 16, so no arrangement of four circles is a
-Venn diagram.
+Venn's construction is inductive: start from the classical three-set diagram,
+then add each set as a closed serpentine loop that bisects every existing
+region, doubling the region count. This works for every N.
 
-The construction used here is Venn's inductive one: start from the
-three-circle diagram, then add each set as a closed serpentine loop that
-bisects every existing region, doubling the region count. This works for
-every N. The project implements the induction twice:
+The original 2016 project realized this construction in Java using a
+square-based (rectilinear) layout. This port re-implements that engine in
+TypeScript and adds a second, circular realization of the same induction:
 
 | Engine | Approach | Source |
 | --- | --- | --- |
-| Smooth (circular) | Three circles on an equilateral trefoil; set 4 is a cut annulus around circle 3; further sets are bands of half the previous gap with semicircular caps. Region membership is computed analytically. | `src/geometry/SmoothConstruction.ts` |
-| Rectilinear | Squares plus serpentine loops traced by a directional state machine, displacement halving per curve. Compact at high N; same geometry as the original 2016 implementation. | `src/geometry/VennsConstruction.ts` |
+| Rectilinear (original) | Squares plus serpentine loops traced by a directional state machine, displacement halving per curve. Compact at high N; same geometry as the 2016 Java implementation. | `src/geometry/VennsConstruction.ts` |
+| Smooth / circular (new) | Three circles on an equilateral trefoil; set 4 is a cut annulus around circle 3; further sets are bands of half the previous gap with semicircular caps. Region membership is computed analytically. | `src/geometry/SmoothConstruction.ts` |
 
-Both engines fill the same regions from the same truth table.
+Both engines fill the same regions from the same truth table; the UI switches
+between them live.
 
 ## Implementation notes
 

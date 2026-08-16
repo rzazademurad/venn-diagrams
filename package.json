@@ -1,0 +1,48 @@
+{
+  "name": "venn-diagrams",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Client-side Boolean logic compiler, truth table evaluator, and arbitrary N-set Venn diagram generator implementing smooth analytic and rectilinear geometric constructions.",
+  "license": "MIT",
+  "author": "Murad Rzazade",
+  "type": "module",
+  "keywords": [
+    "venn-diagram",
+    "propositional-logic",
+    "truth-table",
+    "boolean-algebra",
+    "shunting-yard",
+    "computational-geometry",
+    "flood-fill",
+    "canvas",
+    "react",
+    "typescript",
+    "web-worker",
+    "visualization"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:single": "tsc -b && vite build && node scripts/inline-single-file.mjs",
+    "preview": "vite preview",
+    "test": "node scripts/run-tests.mjs",
+    "test:watch": "node --watch-path=src --watch-path=scripts/parity-tests.ts scripts/run-tests.mjs",
+    "bench": "node scripts/run-bench.mjs",
+    "e2e": "node scripts/dev/verify-app.mjs"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.1",
+    "esbuild": "^0.25.9",
+    "playwright-core": "^1.62.1",
+    "tailwindcss": "^4.1.12",
+    "typescript": "~5.9.2",
+    "vite": "^7.1.3"
+  }
+}

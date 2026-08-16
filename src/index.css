@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/* Class-based dark mode: `dark:` variants activate under <html class="dark">. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * University of Manchester brand palette.
+ * Primary purple #660099, secondary gold #FFCC33 — the accent system of the
+ * whole UI (`uom-*` replaces the generic blue, `uomgold-*` highlights).
+ */
+@theme {
+  --color-uom-50: #faf5fd;
+  --color-uom-100: #f3e7fa;
+  --color-uom-200: #e5cbf3;
+  --color-uom-300: #d0a5e8;
+  --color-uom-400: #b273d9;
+  --color-uom-500: #913dc2;
+  --color-uom-600: #660099;
+  --color-uom-700: #560081;
+  --color-uom-800: #45016a;
+  --color-uom-900: #360253;
+  --color-uom-950: #23063a;
+  --color-uomgold-100: #fff3cc;
+  --color-uomgold-200: #ffe999;
+  --color-uomgold-300: #ffdd66;
+  --color-uomgold-400: #ffd44d;
+  --color-uomgold-500: #ffcc33;
+  --color-uomgold-600: #e6b21e;
+  --color-uomgold-700: #c29414;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+/* Thin scrollbars for the truth-table viewport */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+  border: 2px solid #f8fafc;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dark .thin-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-color: #0f172a;
+}
+
+/* Respect reduced-motion: neutralize decorative transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

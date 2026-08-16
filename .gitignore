@@ -1,0 +1,22 @@
+# Dependencies & build output
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor / IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test & benchmark artifacts
+screenshots
+scripts/.tests-bundle.mjs
+scripts/.bench-bundle.mjs
+*.log

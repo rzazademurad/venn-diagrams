@@ -7,6 +7,13 @@ Type a propositional formula and get its truth table and Venn diagram, for any
 number of sets. Runs entirely in the browser; the only runtime dependencies
 are react and react-dom.
 
+Drawing a Venn diagram beyond three sets is a nontrivial problem: circles
+cannot form one at all for N ≥ 4, and most published layouts only cover small
+fixed N. This project turns Venn's general inductive construction into a
+working algorithm that draws the diagram — and keeps every one of the 2^N
+regions addressable — for arbitrary N. The details are in
+[Why circles are not enough](#why-circles-are-not-enough) below.
+
 **Live demo:** https://rzazademurad.github.io/venn-diagrams/
 
 ![Application screenshot: an 8-set diagram next to its 128-row truth table](UI.png)

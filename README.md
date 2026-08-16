@@ -7,12 +7,11 @@ Type a propositional formula and get its truth table and Venn diagram, for any
 number of sets. Runs entirely in the browser; the only runtime dependencies
 are react and react-dom.
 
-Drawing a Venn diagram beyond three sets is a nontrivial problem: circles
-cannot form one at all for N ≥ 4, and most published layouts only cover small
-fixed N. This project turns Venn's general inductive construction into a
-working algorithm that draws the diagram — and keeps every one of the 2^N
-regions addressable — for arbitrary N. The details are in
-[Why circles are not enough](#why-circles-are-not-enough) below.
+Classical circles cannot construct Venn diagrams for $N \ge 4$ sets because
+$N$ circles produce at most $N^2 - N + 2$ regions (14 regions for 4 circles,
+failing the required $2^4 = 16$). This project implements John Venn's
+inductive serpentine construction to generate and fill all $2^N$ regions for
+arbitrary $N$ — see [Why circles are not enough](#why-circles-are-not-enough).
 
 **Live demo:** https://rzazademurad.github.io/venn-diagrams/
 

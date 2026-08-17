@@ -6,7 +6,11 @@
 An in-browser propositional logic compiler and Venn diagram generator capable
 of drawing and filling exact diagrams for **any** number of sets ($N \ge 1$).
 
-**Live Demo:** https://rzazademurad.github.io/venn-diagrams/
+- **Live demo:** https://rzazademurad.github.io/venn-diagrams/
+- **Paper:** [Drawing Venn Diagrams for Arbitrary N-Sets — 2016 dissertation (PDF)](docs/Murad.Rzazade_Drawing_Venn_Diagrams.pdf)
+- **Video:** [original 2016 demo on YouTube](https://www.youtube.com/watch?v=raVwdW5XCQ0)
+
+<sub>// the video shows the original Java build from 2016 — this repo is its TypeScript successor</sub>
 
 ![Application UI](docs/ui.gif)
 

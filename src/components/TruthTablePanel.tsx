@@ -431,7 +431,7 @@ export function TruthTablePanel(props: TruthTablePanelProps): React.JSX.Element 
           onKeyDown={(e) => {
             if (e.key === 'Enter') runSearch();
           }}
-          className={`h-6 w-28 rounded-lg border px-2 font-mono text-[11px] shadow-sm outline-none transition-colors focus:ring-2 disabled:opacity-40 ${
+          className={`h-8 w-32 rounded-lg border px-2 font-mono text-base shadow-sm outline-none transition-colors focus:ring-2 disabled:opacity-40 sm:h-6 sm:w-28 sm:text-[11px] ${
             searchMiss
               ? 'border-rose-400 bg-rose-50 text-rose-700 focus:ring-rose-200 dark:border-rose-700 dark:bg-rose-950 dark:text-rose-300'
               : 'border-slate-200 bg-white text-slate-700 focus:border-uom-300 focus:ring-uom-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
@@ -525,7 +525,7 @@ export function TruthTablePanel(props: TruthTablePanelProps): React.JSX.Element 
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-slate-400 dark:text-slate-500">
+            <p className="hidden text-[11px] text-slate-400 sm:block dark:text-slate-500">
               Shortcuts: <kbd className="rounded border border-slate-300 bg-white px-1 dark:border-slate-600 dark:bg-slate-800">+</kbd> /{' '}
               <kbd className="rounded border border-slate-300 bg-white px-1 dark:border-slate-600 dark:bg-slate-800">−</kbd> zoom ·{' '}
               <kbd className="rounded border border-slate-300 bg-white px-1 dark:border-slate-600 dark:bg-slate-800">0</kbd> fit ·{' '}

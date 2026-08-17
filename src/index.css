@@ -33,6 +33,14 @@ html, body, #root {
   height: 100%;
 }
 
+/* Mobile browsers: track the DYNAMIC viewport (URL bar show/hide) instead of
+   the static one, so the app never jumps or leaves a dead strip. */
+@supports (height: 100dvh) {
+  html, body, #root {
+    height: 100dvh;
+  }
+}
+
 body {
   margin: 0;
   overscroll-behavior: none;

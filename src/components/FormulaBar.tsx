@@ -143,10 +143,11 @@ export function FormulaBar(props: FormulaBarProps): React.JSX.Element {
       ref={containerRef}
     >
       <div className="flex flex-wrap items-center gap-2">
-        <label htmlFor="statement" className="text-sm font-semibold text-slate-600 dark:text-slate-300">
+        <label htmlFor="statement" className="hidden text-sm font-semibold text-slate-600 dark:text-slate-300 sm:block">
           Statement:
         </label>
-        <div className="relative flex-1 min-w-64">
+        {/* Mobile: the input takes its own full-width row; controls wrap below. */}
+        <div className="relative min-w-0 basis-full sm:min-w-64 sm:flex-1 sm:basis-auto">
           <input
             id="statement"
             ref={inputRef}
@@ -172,7 +173,7 @@ export function FormulaBar(props: FormulaBarProps): React.JSX.Element {
                 inputRef.current?.select();
               }
             }}
-            className={`w-full rounded-lg border px-3 py-1.5 font-mono text-[15px] shadow-sm outline-none transition
+            className={`w-full rounded-lg border px-3 py-1.5 font-mono text-base shadow-sm outline-none transition sm:text-[15px]
               ${
                 error !== null
                   ? 'border-red-400 bg-red-50 focus:ring-2 focus:ring-red-300 dark:border-red-700 dark:bg-red-950 dark:text-red-100'
@@ -210,14 +211,14 @@ export function FormulaBar(props: FormulaBarProps): React.JSX.Element {
           )}
         </div>
 
-        <div className="inline-flex items-center divide-x divide-slate-200 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-800">
+        <div className="inline-flex max-w-full items-center divide-x divide-slate-200 overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-800">
           {SYMBOL_BUTTONS.map((b) => (
             <button
               key={b.label}
               type="button"
               title={b.title}
               onClick={() => insertAtCaret(b.insert)}
-              className="h-8 w-8 font-mono text-[15px] text-slate-600 transition-colors hover:bg-uom-50 hover:text-uom-700 focus-visible:outline-2 focus-visible:outline-uom-500 active:bg-uom-100 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-uom-300"
+              className="h-9 w-9 shrink-0 font-mono text-[15px] text-slate-600 transition-colors hover:bg-uom-50 hover:text-uom-700 focus-visible:outline-2 focus-visible:outline-uom-500 active:bg-uom-100 sm:h-8 sm:w-8 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-uom-300"
             >
               {b.label}
             </button>
@@ -232,7 +233,7 @@ export function FormulaBar(props: FormulaBarProps): React.JSX.Element {
           }}
           disabled={busy}
           title="Construct truth table (Enter)"
-          className="rounded-lg bg-gradient-to-b from-uom-500 to-uom-600 px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:from-uom-400 hover:to-uom-500 focus-visible:outline-2 focus-visible:outline-uom-500 active:translate-y-px disabled:opacity-50"
+          className="flex-1 rounded-lg bg-gradient-to-b from-uom-500 to-uom-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:from-uom-400 hover:to-uom-500 focus-visible:outline-2 focus-visible:outline-uom-500 active:translate-y-px disabled:opacity-50 sm:flex-none sm:py-1.5"
         >
           {busy ? 'Constructing…' : 'Construct'}
         </button>

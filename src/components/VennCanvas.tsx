@@ -681,7 +681,9 @@ export function VennCanvas(props: VennCanvasProps): React.JSX.Element {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Diagram</span>
+        <span className="hidden text-[11px] font-bold uppercase tracking-wider text-slate-400 sm:inline dark:text-slate-500">
+          Diagram
+        </span>
         <div className={SEG_WRAP}>
           <button className={`${TOOLBAR_BTN} text-sm font-bold ${GHOST_BTN}`} onClick={() => zoom('in')} title="Zoom in (+)">
             +
@@ -703,14 +705,14 @@ export function VennCanvas(props: VennCanvasProps): React.JSX.Element {
             onClick={() => onStyleChange('circular')}
             title="Smooth analytic engine — circles for 1–3 sets, inductive smooth bands beyond"
           >
-            ● Circular (Smooth)
+            ● Circular<span className="hidden md:inline"> (Smooth)</span>
           </button>
           <button
             className={segBtn(geometryStyle === 'classic')}
             onClick={() => onStyleChange('classic')}
             title="Rectilinear discretized engine — inductive serpentine curves on a square layout"
           >
-            ▢ Square (Rectilinear)
+            ▢ Square<span className="hidden md:inline"> (Rectilinear)</span>
           </button>
         </div>
         <div className={SEG_WRAP} title="View mode: plain fills or per-set colors">
@@ -728,14 +730,14 @@ export function VennCanvas(props: VennCanvasProps): React.JSX.Element {
           {zoomPercent}%
         </span>
         <span
-          className={`hidden xl:inline-flex ${CHIP_MONO} transition-opacity ${freezeReadouts ? 'opacity-45' : ''}`}
+          className={`${CHIP_MONO} max-xl:hidden transition-opacity ${freezeReadouts ? 'opacity-45' : ''}`}
           title={freezeReadouts ? 'Re-constructing — settles when finished' : 'Pixel-buffer size'}
         >
           {shownWidth} × {shownHeight} px
         </span>
         {viewMode === 'fills' && (
           <span
-            className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400"
+            className="hidden items-center gap-1.5 text-[11px] text-slate-500 sm:flex dark:text-slate-400"
             title="Regions where the statement is true are flood-filled orange — in both styles"
           >
             <span className="inline-block h-3 w-3 rounded-[4px] shadow-inner" style={{ backgroundColor: '#ffa500' }} />

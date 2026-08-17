@@ -73,6 +73,10 @@ export default function App(): React.JSX.Element {
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
   const [scrollSignal, setScrollSignal] = useState<{ row: number; nonce: number } | null>(null);
 
+  // Below the lg breakpoint the two panels don't fit side by side — a bottom
+  // tab bar switches between them, each taking the full remaining height.
+  const [mobilePane, setMobilePane] = useState<'diagram' | 'table'>('diagram');
+
   /** Real-time (as-you-type) syntax feedback via the ported Scanner/Parser. */
   const liveError = useMemo<StatementError | null>(() => {
     const trimmed = input.trim();
@@ -156,6 +160,7 @@ export default function App(): React.JSX.Element {
       setSelectedRow(null);
       setHoveredRow(null);
       setScrollSignal(null);
+      setMobilePane('diagram'); // a fresh construct shows its diagram on mobile
       resetStepping(computationMethod);
       if (updateFields) {
         setInput(outcome.statement); // Java: statementComboBox.setText(scanner.getStatement())
@@ -370,19 +375,19 @@ export default function App(): React.JSX.Element {
           style={{ background: 'radial-gradient(closest-side, #ffcc33, transparent)' }}
         />
         <div
-          className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white p-1 shadow-lg ring-1 ring-white/40"
+          className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-lg ring-1 ring-white/40 sm:h-11 sm:w-11 sm:rounded-2xl"
           title="John Venn's construction for 7 sets — drawn by this application's own engine"
         >
-          <LogoMark className="h-9 w-9" />
+          <LogoMark className="h-7 w-7 sm:h-9 sm:w-9" />
         </div>
         <div className="relative min-w-0">
-          <p className="truncate text-[10px] font-bold uppercase tracking-[0.22em] text-uomgold-500">
+          <p className="hidden truncate text-[10px] font-bold uppercase tracking-[0.22em] text-uomgold-500 md:block">
             University of Manchester · School of Computer Science
           </p>
-          <h1 className="truncate font-serif text-[16px] font-bold leading-tight tracking-tight">
+          <h1 className="truncate font-serif text-[15px] font-bold leading-tight tracking-tight sm:text-[16px]">
             Drawing Venn Diagrams for Arbitrary N-Sets
           </h1>
-          <p className="truncate text-[11px] leading-tight text-uom-200/90">
+          <p className="hidden truncate text-[11px] leading-tight text-uom-200/90 sm:block">
             by <span className="font-semibold text-uomgold-300">Murad Rzazade</span>
             <span className="mx-1.5 text-uom-300/60">—</span>
             type a logical statement, get its truth table and Venn diagram for any number of sets
@@ -427,7 +432,11 @@ export default function App(): React.JSX.Element {
       />
 
       <main className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <VennCanvas
+        {/* Both panels stay MOUNTED on mobile (hidden, not unmounted) so the
+            canvas viewport, scroll positions and worker state survive tab
+            switches; ResizeObservers re-measure on re-show. */}
+        <div className={`min-h-0 flex-1 ${mobilePane === 'diagram' ? 'flex' : 'hidden'} lg:flex`}>
+          <VennCanvas
           mirror={mirror}
           revision={mirrorRevision}
           theme={theme}
@@ -449,10 +458,12 @@ export default function App(): React.JSX.Element {
           onViewModeChange={setViewMode}
           zoomSignal={zoomSignal}
           onRequestBufferZoom={worker.zoom}
-          zoomDoneSignal={zoomDoneSignal}
-          truthTable={analysis?.truthTable ?? null}
-        />
-        <TruthTablePanel
+            zoomDoneSignal={zoomDoneSignal}
+            truthTable={analysis?.truthTable ?? null}
+          />
+        </div>
+        <div className={`min-h-0 ${mobilePane === 'table' ? 'flex flex-1' : 'hidden'} lg:flex lg:flex-none`}>
+          <TruthTablePanel
           truthTable={analysis?.truthTable ?? null}
           evaluation={analysis?.evaluation ?? null}
           toggles={toggles}
@@ -472,13 +483,41 @@ export default function App(): React.JSX.Element {
           onRowClick={setSelectedRow}
           onJumpToRow={selectRowAndScroll}
           scrollSignal={scrollSignal}
-          dark={theme === 'dark'}
-          onExample={(s) => {
-            setInput(s);
-            construct(s);
-          }}
-        />
+            dark={theme === 'dark'}
+            onExample={(s) => {
+              setInput(s);
+              construct(s);
+            }}
+          />
+        </div>
       </main>
+
+      {/* Mobile pane switcher — bottom tab bar, hidden at lg and up. */}
+      <nav
+        className="grid shrink-0 grid-cols-2 border-t border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 lg:hidden"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+        aria-label="Panel switcher"
+      >
+        {(
+          [
+            ['diagram', '◔ Diagram'],
+            ['table', '▦ Truth table'],
+          ] as const
+        ).map(([pane, label]) => (
+          <button
+            key={pane}
+            onClick={() => setMobilePane(pane)}
+            aria-pressed={mobilePane === pane}
+            className={`h-12 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-uom-500 ${
+              mobilePane === pane
+                ? 'border-t-2 border-uom-600 bg-uom-50 text-uom-800 dark:border-uom-400 dark:bg-uom-950 dark:text-uom-200'
+                : 'border-t-2 border-transparent text-slate-500 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </nav>
 
       <HelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />
     </div>

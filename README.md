@@ -8,7 +8,7 @@ of drawing and filling exact diagrams for **any** number of sets ($N \ge 1$).
 
 **Live Demo:** https://rzazademurad.github.io/venn-diagrams/
 
-![Application UI](UI.png)
+![Application UI](docs/ui.gif)
 
 ## The Problem and the Algorithm
 

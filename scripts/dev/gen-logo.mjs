@@ -122,5 +122,5 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">$
   .replaceAll('fillOpacity', 'fill-opacity')
   .replaceAll('strokeWidth', 'stroke-width')
   .replaceAll('strokeLinecap', 'stroke-linecap')}</svg>`;
-writeFileSync(path.join(root, 'favicon-src.svg'), svg);
+writeFileSync(path.join(root, 'docs/favicon-src.svg'), svg);
 console.log('LogoMark.tsx written; viewBox', vb.join(' '), '; favicon bytes', svg.length);

@@ -66,25 +66,28 @@ TypeScript and adds a second, circular realization of the same induction:
 Both engines fill the same regions from the same truth table; the UI switches
 between them live.
 
-## Implementation notes
+## What makes this project unique
 
-- `src/logic/` — scanner and shunting-yard parser with character-offset
-  error reporting, plus the truth-table evaluator.
-- `src/geometry/Mapper.ts` — maps truth-table rows to diagram regions.
-  Boundary points left by the last serpentine loop are projected into seed
-  points, grouped by quadrant, and folded log₂ M times; index i of the result
-  is the interior pixel of the region for row i. The same map is used in
-  reverse for hover-to-minterm lookup.
-- `src/worker/` — all construction, mapping and filling runs in a Web
-  Worker, so the UI stays responsive and jobs can be cancelled.
-- `src/renderer/` — iterative (explicit-stack) flood fill over a
-  Uint32Array view; tiled canvas rendering, since browsers blank a single
-  canvas above roughly 268 Mpx; zooming re-runs the construction on a larger
-  buffer so curves stay one pixel wide.
+Most online tools only draw 3 circles or static templates for 4 to 6 sets.
+This project builds a complete, working pipeline for any number of sets
+(arbitrary N):
 
-Features: two view modes (fills / per-set tinting), construction replay,
-virtualized truth table with search, PNG and SVG export, table export to
-CSV/Markdown/LaTeX/text, shareable URLs, dark mode, keyboard access.
+- **Row-to-region mapping** (`src/geometry/Mapper.ts`) — a custom
+  quadrant-folding algorithm that reliably maps every truth-table row (all
+  2^N combinations) to the exact pixel inside its diagram region for flood
+  filling, and runs in reverse for hover-to-minterm lookup.
+- **Two realizations of Venn's induction** — the original 2016 rectilinear
+  serpentine engine (discretized loops) and a new smooth circular engine,
+  driven by the same truth table.
+- **Large-set scalability** — solves tiny-region and browser memory limits
+  by running all geometry off the main thread in a Web Worker, with a custom
+  32-bit iterative flood fill, tiled canvas rendering, and automatic
+  buffer-growth zooming so curves stay 1 px sharp.
+
+Around the engine: two view modes (fills / per-set tinting), construction
+replay, a virtualized truth table with search, PNG/SVG export, table export
+to CSV/Markdown/LaTeX/text, shareable URLs, dark mode, keyboard and mobile
+support.
 
 ## Project structure
 
@@ -104,11 +107,9 @@ docs/              the 2016 project report (PDF)
 
 ## Testing
 
-`npm test` runs 213 assertions checking parity with the reference engine:
-scanner error offsets, postfix output, truth-table rows, geometry for both
-engines up to N = 7, auto-zoom at N = 10, flood-fill invariants and export
-samples. `npm run e2e` drives the production build in headless Chromium with
-zero tolerated console errors.
+`npm test` runs 213 assertions checking logic and geometry parity with the
+reference engine; `npm run e2e` drives the production build in headless
+Chromium with zero tolerated console errors.
 
 ## Background
 
